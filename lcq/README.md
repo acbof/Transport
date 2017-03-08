@@ -1,27 +1,30 @@
-#lcq - Legendre-Chebyshev quadratures
+# lcq - Legendre-Chebyshev quadratures
 
 This folder contains some useful codes for dealing with Legendre-Chebyshev 
 quadratures for integrals over the unit sphere, i.e.:
 
-..math  ::
-  \\int_{S^2} f(\\Omega) d\\Omega \\approx \\sum_{i=1}^M w_i f(\\Omega_i)$,
+$$
+\int_{S^2} f(\Omega) d\Omega \approx \sum_{i=1}^M w_i f(\Omega_i),
+$$
 
 where 
 
-..math :: \\Omega = (\\mu, \\eta, \\xi)\in S^2 := \\{\\mu^2+\\eta^2+\\xi^2=1\\}$.
+$$
+\Omega = (\mu, \eta, \xi)\in S^2 := \{\mu^2+\eta^2+\xi^2=1\\}.
+$$
 
-Author
+## Author
 ______
 
 Pedro H A Konzen - UFRGS - Mar/2017
 
-Contents
+## Contents
 ________
 
 * lcqq - Legendre-Chebyshev quadrangular quadrature
 * lctq - Legendre-Chebyshev triangular quadrature
 
-Licence
+## Licence
 _______
 
 This program is free software: you can redistribute it and/or modify

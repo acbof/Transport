@@ -1,16 +1,25 @@
-# Radiation
+#lcq - Legendre-Chebyshev quadratures
 
-Some useful codes for dealing with transport problems.
+This folder contains some useful codes for dealing with Legendre-Chebyshev 
+quadratures for integrals over the unit sphere, i.e.:
+
+..math  ::
+  \\int_{S^2} f(\\Omega) d\\Omega \\approx \\sum_{i=1}^M w_i f(\\Omega_i)$,
+
+where 
+
+..math :: \\Omega = (\\mu, \\eta, \\xi)\in S^2 := \\{\\mu^2+\\eta^2+\\xi^2=1\\}$.
 
 Author
 ______
 
-Pedro H A Konzen - UFRGS - 2017
+Pedro H A Konzen - UFRGS - Mar/2017
 
 Contents
 ________
 
-lcq - Legendre-Chebyshev quadratures
+* lcqq - Legendre-Chebyshev quadrangular quadrature
+* lctq - Legendre-Chebyshev triangular quadrature
 
 Licence
 _______

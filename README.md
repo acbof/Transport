@@ -2,17 +2,17 @@
 
 Some useful codes for dealing with transport problems.
 
-Author
+## Author
 ______
 
 Pedro H A Konzen - UFRGS - 2017
 
-Contents
+## Contents
 ________
 
 lcq - Legendre-Chebyshev quadratures
 
-Licence
+## Licence
 _______
 
 This program is free software: you can redistribute it and/or modify

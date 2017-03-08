@@ -1,26 +1,25 @@
 """
-# Legendre-Chebyshev triangular quadrature
+Legendre-Chebyshev triangular quadrature
+________________________________________
 
 This Python code provides points and weights of the Legendre-Chebyshev 
 triangular quadrature for integrals on the unit sphere, i.e.:
 
-$$
-\int_{S^2} f(\Omega) d\Omega \approx \sum_{i=1}^M w_i f(\Omega_i),
-$$
+..math:
+   \\int_{S^2} f(\\Omega) d\\Omega \\approx \\sum_{i=1}^M w_i f(\\Omega_i),
 
 where 
 
-$$
-\Omega = (\mu, \eta, \xi)\in S^2 := \{\mu^2+\eta^2+\xi^2=1\}.
-$$
+..math: 
+   \\Omega = (\\mu, \\eta, \\xi)\in S^2 := \\{\\mu^2+\\eta^2+\\xi^2=1\\}.
 
-## Author
-___
+Author
+______
 
 Pedro H A Konzen - UFRGS - Mar/2017
 
-## Licence
-___
+Licence
+_______
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,9 +34,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-## References
-___
-
+References
+__________
 
 """
 

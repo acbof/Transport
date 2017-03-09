@@ -1,19 +1,16 @@
-# Radiation
+# Transport
 
 Some useful codes for dealing with transport problems.
 
 ## Author
-______
 
 Pedro H A Konzen - UFRGS - 2017
 
 ## Contents
-________
 
 lcq - Legendre-Chebyshev quadratures
 
 ## Licence
-_______
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

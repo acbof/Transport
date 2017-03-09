@@ -158,8 +158,8 @@ c=0
 for m in np.arange(M):
     not_there = True
     for i in np.arange(0,c):
-        if ((mu3[m] == mu2[i]) and
-            (eta3[m] == eta2[i])):
+        if ((np.fabs(mu3[m] - mu2[i]) < 1e-15) and
+            (np.fabs(eta3[m] - eta2[i]) < 1e-15)):
             not_there = False
             ww2[i] += ww3[m]
             break
@@ -240,7 +240,7 @@ c=0
 for m in np.arange(M):
     not_there = True
     for i in np.arange(0,c):
-        if (mu3[m] == mu1[i]):
+        if (np.fabs(mu3[m] - mu1[i]) < 1e-15):
             not_there = False
             ww1[i] += ww3[m]
             break

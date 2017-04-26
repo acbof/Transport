@@ -2,7 +2,7 @@
 Legendre-Chebyshev triangular quadrature
 ________________________________________
 
-This Python code provides points and weights of the Legendre-Chebyshev 
+This Python3 code provides points and weights of the Legendre-Chebyshev 
 triangular quadrature for integrals on the unit sphere, i.e.:
 
 ..math:
@@ -52,7 +52,7 @@ the Free Software Foundation, either version 3 of the License, or\n\
 ")
 
 #order (must be even)
-N = 4
+N = 6
 
 #check parity
 if (N % 2):
@@ -92,7 +92,7 @@ for i in np.arange(1,N/2+1):
 print("Quadrature table for 3D computations")
 print("[mu, eta, xi, w]")
 for i in np.arange(M):
-    print(mu3[i],eta3[i],xi3[i],ww3[i])
+    print("%1.7E %1.7E %1.7E %1.7E" % (mu3[i],eta3[i],xi3[i],ww3[i]))
 
 #Testing
 #build the complete table
@@ -178,7 +178,7 @@ M2 = c
 
 print("[mu, eta, w]")
 for i in np.arange(M2):
-    print(mu2[i],eta2[i],ww2[i])
+    print("%1.7E %1.7E %1.7E" % (mu2[i],eta2[i],ww2[i]))
 
 #Testing
 #build the complete table
@@ -257,7 +257,7 @@ M1 = c
 
 print("[mu, w]")
 for i in np.arange(M1):
-    print(mu1[i],ww1[i])
+    print("%1.7E %1.7E" % (mu1[i],ww1[i]))
 
 #Testing
 #build the complete table

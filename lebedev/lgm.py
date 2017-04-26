@@ -1,8 +1,8 @@
 """
-Legendre-Chebyshev quadrangular quadrature
+Lebedev Gauss-Markov quadrature
 
-This Python3 code provides points and weights of the Legendre-Chebyshev 
-triangular quadrature for integrals on the unit sphere, i.e.:
+This Python3 code provides points and weights of the Lebedev 
+Gauss-Markov quadrature for integrals on the unit sphere, i.e.:
 
 ..math: 
    \\int_{S^2} f(\\Omega) d\\Omega \\approx \\sum_{i=1}^M w_i f(\\Omega_i),
@@ -15,7 +15,7 @@ where
 Author
 ______
 
-Pedro H A Konzen - UFRGS - Mar/2017
+Pedro H A Konzen - UFRGS - Abr/2017
 
 Licence
 _______
@@ -36,12 +36,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 References
 __________
 
+LEBEDEV, V.I.; Values of the nodes and weights of ninth to seventeenth 
+order Gauss-Markov quadrature formulae invariant under the octahedron 
+group with inversion. USSR Computational Mathematics and Mathematical 
+Physics, 15(1), 1975, 44--51.
+
 """
 
 import numpy as np
 from numpy import polynomial as poly
 
-print("Legendre-Chebyshev quadrangular quadrature\n\
+print("Lebedev Gauss-Markov quadrature\n\
 Author: Pedro H A Konzen - UFRGS - 2017\n\n\
 This program comes with ABSOLUTELY NO WARRANTY.\n\n\
 This program is free software: you can redistribute it and/or modify\n\
@@ -50,8 +55,8 @@ the Free Software Foundation, either version 3 of the License, or\n\
 (at your option) any later version.\n\n\
 ")
 
-#order (must be even)
-N = 6
+#order (9 <= N <= 17)
+N = 9
 
 #check parity
 if (N % 2):

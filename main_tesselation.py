@@ -30,7 +30,7 @@ __________
 import tesselation as quad
 
 #quadrature order
-N = 4
+N = 20
 
 #initiate the quadrature
 q = quad.Tesselation(N)
@@ -41,3 +41,6 @@ q.printFirstOctantSet()
 
 #build the complete quadrature set
 q.build3d()
+
+#diagnotics
+q.diagnostics()

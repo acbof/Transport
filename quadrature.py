@@ -86,3 +86,12 @@ class Quadrature:
         print("%s\n" % ((4*15+3)*"*"))
 
         
+    def diagnostics(self):
+        self.zerothMomentError()
+
+    def zerothMomentError(self):
+        s = 0.0
+        for i in range(self.nnodes3):
+            s += self.w3[i]
+        print("Zeroth moment error: %1.2e" % np.fabs(s-4*np.pi))
+        

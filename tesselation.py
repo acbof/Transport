@@ -145,29 +145,29 @@ class Tesselation(quadrature.Quadrature):
             self.eta[t] = centroid[t,1]/factor
             self.xi[t] = centroid[t,2]/factor
 
-            #compute the quadrature weights (first octant), i.e.
-            #the surface of each spherical triangle
-            for t in range(self.nnodes):
-                #compute arc lengths
-                a = 0
-                b = 0
-                c = 0
-                for cc in range(3):
-                    a += sphT[t,1,cc]*sphT[t,2,cc]
-                    b += sphT[t,0,cc]*sphT[t,2,cc]
-                    c += sphT[t,0,cc]*sphT[t,1,cc]
-                a = np.arccos(a)
-                b = np.arccos(b)
-                c = np.arccos(c)
-                #compute vertices angles
-                A = np.arccos((np.cos(a) - np.cos(b)*np.cos(c))/\
-                              (np.sin(b)*np.sin(c)))
-                B = np.arccos((np.cos(b) - np.cos(c)*np.cos(a))/\
-                              (np.sin(c)*np.sin(a)))
-                C = np.arccos((np.cos(c) - np.cos(a)*np.cos(b))/\
-                              (np.sin(a)*np.sin(b)))
-                #compute the area as the spherical excess
-                self.w[t] = A+B+C - np.pi
+        #compute the quadrature weights (first octant), i.e.
+        #the surface of each spherical triangle
+        for t in range(self.nnodes):
+            #compute arc lengths
+            a = 0
+            b = 0
+            c = 0
+            for cc in range(3):
+                a += sphT[t,1,cc]*sphT[t,2,cc]
+                b += sphT[t,0,cc]*sphT[t,2,cc]
+                c += sphT[t,0,cc]*sphT[t,1,cc]
+            a = np.arccos(a)
+            b = np.arccos(b)
+            c = np.arccos(c)
+            #compute vertices angles
+            A = np.arccos((np.cos(a) - np.cos(b)*np.cos(c))/\
+                        (np.sin(b)*np.sin(c)))
+            B = np.arccos((np.cos(b) - np.cos(c)*np.cos(a))/\
+                        (np.sin(c)*np.sin(a)))
+            C = np.arccos((np.cos(c) - np.cos(a)*np.cos(b))/\
+                        (np.sin(a)*np.sin(b)))
+            #compute the area as the spherical excess
+            self.w[t] = A+B+C - np.pi
 
     def build3d(self):
         '''
@@ -187,4 +187,5 @@ class Tesselation(quadrature.Quadrature):
                         self.eta3[node3] = j*self.eta[node]
                         self.xi3[node3] = k*self.xi[node]
                         self.w3[node3] = self.w[node]
+                        node3 += 1
                         

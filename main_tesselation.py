@@ -30,7 +30,7 @@ __________
 import tesselation as quad
 
 #quadrature order
-N = 20
+N = 3
 
 #initiate the quadrature
 q = quad.Tesselation(N)
@@ -44,3 +44,6 @@ q.build3d()
 
 #diagnotics
 q.diagnostics()
+
+#plot
+q.plotFirstOctant(show=True)

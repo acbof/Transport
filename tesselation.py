@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
-Quadrature sets on the unit sphere
+Tesselation (T_N) quadrature sets on the unit sphere
 
-This Python3 code is a base class of quadrature sets on the unit
+This Python3 code is a inherited class of quadrature sets on the unit
 sphere, i.e.
 
 ..math: 
@@ -17,6 +17,7 @@ Author
 ______
 
 Pedro H A Konzen - UFRGS - Mar/2017
+Ana Carolina Bof - UFRGS - Jun/2017
 
 Licence
 _______
@@ -42,6 +43,10 @@ __________
 import quadrature
 
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+
 
 class Tesselation(quadrature.Quadrature):
 
@@ -54,13 +59,19 @@ class Tesselation(quadrature.Quadrature):
         self.eta = np.resize(self.eta, self.nnodes)
         self.xi = np.resize(self.xi, self.nnodes)
         self.w = np.resize(self.w, self.nnodes)
+        #centroids
+        self.centroid = []
+        self.strT = []
+        self.sphT = []
         #build quadrature set on first octant
         self.buildFirstOctantSet()
         
 
     def __repr__(self):
         note =  "\nTesselation quadrature set\n"
-        note += "Author: Pedro H A Konzen - UFRGS - 2017\n\n" +\
+        note += "Author:\n" +\
+                "\tPedro H A Konzen - UFRGS - 2017\n" +\
+                "\tAna Carolina Bof\n" +\
                 "This program comes with ABSOLUTELY NO WARRANTY.\n\n" +\
                 "This program is free software: you can redistribute" +\
                 "it and/or modify\n" +\
@@ -100,50 +111,50 @@ class Tesselation(quadrature.Quadrature):
 
         #tesselate the straight triangle
         t = 0
-        strT = np.zeros((self.nnodes,3,3),dtype='double')
+        self.strT = np.zeros((self.nnodes,3,3),dtype='double')
         #loop over levels
         for l in range(self.N):
             for v in range(level[l]['nv']-1):
-                strT[t,0,:] = level[l]['v'][v]
-                strT[t,1,:] = [level[l]['v'][v][0]-h,
+                self.strT[t,0,:] = level[l]['v'][v]
+                self.strT[t,1,:] = [level[l]['v'][v][0]-h,
                                level[l]['v'][v][1]+h,
                                level[l]['v'][v][2]]
-                strT[t,2,:] = [level[l]['v'][v][0]-h,
+                self.strT[t,2,:] = [level[l]['v'][v][0]-h,
                                level[l]['v'][v][1],
                                level[l]['v'][v][2]+h]
                 t += 1
             for v in range(1,level[l]['nv']-1):
-                strT[t,0,:] = level[l]['v'][v]
-                strT[t,1,:] = [level[l]['v'][v][0]-h,
+                self.strT[t,0,:] = level[l]['v'][v]
+                self.strT[t,1,:] = [level[l]['v'][v][0]-h,
                                level[l]['v'][v][1],
                                level[l]['v'][v][2]+h]
-                strT[t,2,:] = [level[l]['v'][v][0],
+                self.strT[t,2,:] = [level[l]['v'][v][0],
                                level[l]['v'][v][1]-h,
                                level[l]['v'][v][2]+h]
                 t += 1
         #compute straight triangle centroids
-        centroid = np.empty((self.nnodes,3), dtype='double')
+        self.centroid = np.empty((self.nnodes,3), dtype='double')
         for t in range(self.nnodes):
             for c in range(3):
-                centroid[t,c] = (strT[t,0,c]+strT[t,1,c]+strT[t,2,c])/3
+                self.centroid[t,c] = (self.strT[t,0,c]+self.strT[t,1,c]+self.strT[t,2,c])/3
 
         #project straight triangles onto spherical triangles
         #also computes the quadrature nodes (first octant)
-        sphT = np.empty((self.nnodes,3,3), dtype='double')
+        self.sphT = np.empty((self.nnodes,3,3), dtype='double')
         for t in range(self.nnodes):
             for p in range(3):
-                factor = np.sqrt(strT[t,p,0]**2 +
-                                 strT[t,p,1]**2 +
-                                 strT[t,p,2]**2)
+                factor = np.sqrt(self.strT[t,p,0]**2 +
+                                 self.strT[t,p,1]**2 +
+                                 self.strT[t,p,2]**2)
                 for c in range(3):
-                    sphT[t,p,c] = strT[t,p,c]/factor
+                    self.sphT[t,p,c] = self.strT[t,p,c]/factor
         
-            factor = np.sqrt(centroid[t,0]**2 +
-                             centroid[t,1]**2 +
-                             centroid[t,2]**2)
-            self.mu[t] = centroid[t,0]/factor
-            self.eta[t] = centroid[t,1]/factor
-            self.xi[t] = centroid[t,2]/factor
+            factor = np.sqrt(self.centroid[t,0]**2 +
+                             self.centroid[t,1]**2 +
+                             self.centroid[t,2]**2)
+            self.mu[t] = self.centroid[t,0]/factor
+            self.eta[t] = self.centroid[t,1]/factor
+            self.xi[t] = self.centroid[t,2]/factor
 
         #compute the quadrature weights (first octant), i.e.
         #the surface of each spherical triangle
@@ -153,9 +164,9 @@ class Tesselation(quadrature.Quadrature):
             b = 0
             c = 0
             for cc in range(3):
-                a += sphT[t,1,cc]*sphT[t,2,cc]
-                b += sphT[t,0,cc]*sphT[t,2,cc]
-                c += sphT[t,0,cc]*sphT[t,1,cc]
+                a += self.sphT[t,1,cc]*self.sphT[t,2,cc]
+                b += self.sphT[t,0,cc]*self.sphT[t,2,cc]
+                c += self.sphT[t,0,cc]*self.sphT[t,1,cc]
             a = np.arccos(a)
             b = np.arccos(b)
             c = np.arccos(c)
@@ -188,4 +199,115 @@ class Tesselation(quadrature.Quadrature):
                         self.xi3[node3] = k*self.xi[node]
                         self.w3[node3] = self.w[node]
                         node3 += 1
+                        
+                        
+    def plotFirstOctant(self,
+                        fname="plot",
+                        extension="png",
+                        showAxis=True,
+                        show=False):
+        #font letter
+        plt.rc('text', usetex=False)
+        plt.rc('font', family='serif', size=12)
+        
+
+        fig = plt.figure(figsize=(8,4), dpi=300, 
+                         linewidth=0.0, facecolor="white")
+        ax1 = plt.subplot(1,2,1, projection='3d')
+        ax2 = plt.subplot(1,2,2, projection='3d')
+        #ax.axis('off')
+
+        ax1.set_xlabel("x")
+        ax1.set_xticks([0,1])
+        ax1.set_ylabel("y")
+        ax1.set_yticks([0])
+        ax1.set_zlabel("z")
+        ax1.set_zticks([1])
+        
+        ax2.set_xlabel("x")
+        ax2.set_xticks([0,1])
+        ax2.set_ylabel("y")
+        ax2.set_yticks([0])
+        ax2.set_zlabel("z")
+        ax2.set_zticks([1])
+        
+        ax1.view_init(15,45)
+        ax2.view_init(15,45)
+
+        #plot's list
+        p = []
+        for t in range(self.nnodes):
+            #straigth triangles
+            p.append(ax1.plot([self.strT[t,0,0],self.strT[t,1,0],self.strT[t,2,0],self.strT[t,0,0]],
+                              [self.strT[t,0,1],self.strT[t,1,1],self.strT[t,2,1],self.strT[t,0,1]],
+                              [self.strT[t,0,2],self.strT[t,1,2],self.strT[t,2,2],self.strT[t,0,2]],
+                              color="black",linestyle="--",linewidth=0.75))        
+
+            #straigth triangles centroids
+            p.append(ax1.plot([self.centroid[t,0]],
+                              [self.centroid[t,1]],
+                              [self.centroid[t,2]], 'k.', color="blue"))
+
+            #numbering
+            p.append(ax1.text(self.centroid[t,0],self.centroid[t,1]+0.05,
+                              self.centroid[t,2],str(t),fontsize=8))
+
+            #spherical triangles
+            Npts = 30
+            xx = np.linspace(self.strT[t,0,0],self.strT[t,1,0],Npts)
+            xx = np.append(xx,np.linspace(self.strT[t,1,0],self.strT[t,2,0],Npts))
+            xx = np.append(xx,np.linspace(self.strT[t,2,0],self.strT[t,0,0],Npts))
+
+            yy = np.linspace(self.strT[t,0,1],self.strT[t,1,1],Npts)
+            yy = np.append(yy,np.linspace(self.strT[t,1,1],self.strT[t,2,1],Npts))
+            yy = np.append(yy,np.linspace(self.strT[t,2,1],self.strT[t,0,1],Npts))
+
+            zz = np.linspace(self.strT[t,0,2],self.strT[t,1,2],Npts)
+            zz = np.append(zz,np.linspace(self.strT[t,1,2],self.strT[t,2,2],Npts))
+            zz = np.append(zz,np.linspace(self.strT[t,2,2],self.strT[t,0,2],Npts))
+
+            for i in range(xx.size):
+                factor = np.sqrt(xx[i]**2 + yy[i]**2 + zz[i]**2)
+                xx[i] = xx[i]/factor
+                yy[i] = yy[i]/factor
+                zz[i] = zz[i]/factor
+
+            p.append(ax2.plot(xx,yy,zz,color="black",
+                          linestyle="--",linewidth=0.75))
+
+            #spherical triangles centroids
+            factor = np.sqrt(self.centroid[t,0]**2+self.centroid[t,1]**2+self.centroid[t,2]**2)
+            p.append(ax2.plot([self.centroid[t,0]/factor+0.025],
+                          [self.centroid[t,1]/factor],
+                          [self.centroid[t,2]/factor], 'k.', color="blue"))
+
+            #numbering
+            p.append(ax2.text(self.centroid[t,0]/factor,self.centroid[t,1]/factor,
+                      self.centroid[t,2]/factor,str(t),fontsize=8))
+
+        #external straight triangle
+        p.append(ax1.plot([1,0,0,1],[0,1,0,0],[0,0,1,0],"k-"))
+
+        #external spherical triangle
+        Npts = 30   
+        xx = np.linspace(1,0,Npts)
+        xx = np.append(xx,np.zeros(Npts))
+        xx = np.append(xx,np.linspace(0,1,Npts))
+
+        yy = np.linspace(0,1,Npts)
+        yy = np.append(yy,np.linspace(1,0,Npts))
+        yy = np.append(yy,np.zeros(Npts))
+
+        zz = np.zeros(Npts)
+        zz = np.append(zz,np.linspace(0,1,Npts))
+        zz = np.append(zz,np.linspace(1,0,Npts))
+
+        for i in range(xx.size):
+            factor = np.sqrt(xx[i]**2 + yy[i]**2 + zz[i]**2)
+            xx[i] = xx[i]/factor
+            yy[i] = yy[i]/factor
+            zz[i] = zz[i]/factor
+        p.append(ax2.plot(xx,yy,zz,color="black",
+                          linestyle="-",linewidth=0.75))
+
                         

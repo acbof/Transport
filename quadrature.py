@@ -17,6 +17,7 @@ Author
 ______
 
 Pedro H A Konzen - UFRGS - Mar/2017
+Ana Carolina Bof - UFRGS - Jun/2017
 
 Licence
 _______
@@ -41,7 +42,7 @@ __________
 
 import numpy as np
 import matplotlib
-matplotlib.use('Qt4Agg')
+#matplotlib.use('Qt4Agg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -68,7 +69,9 @@ class Quadrature:
 
     def __name__(self):
         return "\nBase class for quadrature sets on the unit sphere\n\
-        Author: Pedro H A Konzen - UFRGS - 2017\n\n\
+        Authors: \n\
+        \tPedro H A Konzen - UFRGS - 2017\n\
+        \tAna Carolina Bof- UFRGS - 2017\n\n\
         This program comes with ABSOLUTELY NO WARRANTY.\n\n\
         This program is free software: you can redistribute\
         it and/or modify\n\
@@ -96,7 +99,7 @@ class Quadrature:
                         showAxis=True,
                         show=False):
         #font letter
-        plt.rc('text', usetex=True)
+        plt.rc('text', usetex=False)
         plt.rc('font', family='serif', size=12)
         
 

@@ -1,14 +1,20 @@
-# Transport
+# Transport/quad
 
-Some useful codes for dealing with transport problems.
+Some quadrature sets on the unit sphere.
 
-## Author
+## Authors
 
 Pedro H A Konzen - UFRGS - 2017
+Ana Carolina Bof - UFRGS - 2017
 
 ## Contents
 
-quad - quadrature sets on the unit sphere
+### Python classes
+quadrature.py - base class for quadrature sets
+tesselation.py - T_N (tesselation) quadrature set
+
+### Example codes
+main_tesselation.py - example of application of the T_N quadrature set
 
 ## Licence
 

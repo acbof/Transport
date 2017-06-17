@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Tesselation (T_N) quadrature sets on the unit sphere
+Tesselation (T_N) quadrature set on the unit sphere
 
 This Python3 code is a inherited class of quadrature sets on the unit
 sphere, i.e.
@@ -37,6 +37,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 References
 __________
+
+[1] Thurgood, C. P., A. Pollard, and H. A. Becker. "The TN quadrature set for the discrete ordinates method." TRANSACTIONS-AMERICAN SOCIETY OF MECHANICAL ENGINEERS JOURNAL OF HEAT TRANSFER 117 (1995): 1068-1069.
 
 """
 
@@ -311,3 +313,5 @@ class Tesselation(quadrature.Quadrature):
                           linestyle="-",linewidth=0.75))
 
                         
+        plt.savefig(fname+"."+extension,
+                    bbox_inches="tight")

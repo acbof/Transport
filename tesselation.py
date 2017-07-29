@@ -19,7 +19,7 @@ ______
 Pedro H A Konzen - UFRGS - Mar/2017
 Ana Carolina Bof - UFRGS - Jun/2017
 
-Licence
+License
 _______
 
 This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ class Tesselation(quadrature.Quadrature):
         quadrature.Quadrature.__init__(self,N)
         #num. nodes of first octant
         self.nnodes = N**2
-        #notes and weights on first octant
+        #nodes and weights on first octant
         self.mu = np.resize(self.mu, self.nnodes)
         self.eta = np.resize(self.eta, self.nnodes)
         self.xi = np.resize(self.xi, self.nnodes)
@@ -95,7 +95,7 @@ class Tesselation(quadrature.Quadrature):
         for l in range(self.N+1):
             #add new level
             level.append({})
-            #num verteces
+            #num vertices
             nv = self.N+1-l
             level[l]['nv'] = nv
             #inicial vertice

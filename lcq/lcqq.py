@@ -60,8 +60,8 @@ if (N % 2):
 #Gauss-Legendre quadrature (x,w) - (points, weights)
 x,w = poly.legendre.leggauss(N);
 #just the positive values
-xi = x[N/2:] 
-w0 = w[N/2:]
+xi = x[int(N/2):] 
+w0 = w[int(N/2):]
 
 #wbar
 wbar = np.zeros(N,dtype='double')
@@ -69,15 +69,15 @@ for i in np.arange(1,N+1):
     wbar[i-1] = np.pi/2 * (1 - (N-2*i+1)/N)
 
 #Quadratute points on the first octant (3D computations)
-M = N**2/4
+M = int(N**2/4)
 mu3= np.zeros(M,dtype='double')
 eta3= np.zeros(M,dtype='double')
 xi3= np.zeros(M,dtype='double')
 ww3= np.zeros(M,dtype='double')
 
 c = 0
-for i in np.arange(N/2):
-    for j in np.arange(N/2):
+for i in np.arange(int(N/2)):
+    for j in np.arange(int(N/2)):
         aux = np.sqrt(1-xi[i]**2)*np.cos(wbar[j])
         if (aux > 0.0):
             mu3[c] = aux

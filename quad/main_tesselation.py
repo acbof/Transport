@@ -41,3 +41,9 @@ q.printFirstOctantSet()
 
 #build the complete quadrature set
 q.build3d()
+
+#diagnotics
+q.diagnostics()
+
+#plot
+q.plotFirstOctant(show=True)

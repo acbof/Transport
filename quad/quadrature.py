@@ -17,6 +17,7 @@ Author
 ______
 
 Pedro H A Konzen - UFRGS - Mar/2017
+Ana Carolina Bof - UFRGS - Jun/2017
 
 Licence
 _______
@@ -40,6 +41,11 @@ __________
 """
 
 import numpy as np
+import matplotlib
+#matplotlib.use('Qt4Agg')
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
 
 class Quadrature:
 
@@ -63,7 +69,9 @@ class Quadrature:
 
     def __name__(self):
         return "\nBase class for quadrature sets on the unit sphere\n\
-        Author: Pedro H A Konzen - UFRGS - 2017\n\n\
+        Authors: \n\
+        \tPedro H A Konzen - UFRGS - 2017\n\
+        \tAna Carolina Bof- UFRGS - 2017\n\n\
         This program comes with ABSOLUTELY NO WARRANTY.\n\n\
         This program is free software: you can redistribute\
         it and/or modify\n\
@@ -85,4 +93,76 @@ class Quadrature:
         print("\nNum. nodes on first octant: %d\n" % self.nnodes)
         print("%s\n" % ((4*15+3)*"*"))
 
+    def plotFirstOctant(self,
+                        fname="plot",
+                        extension="png",
+                        showAxis=True,
+                        show=False):
+        #font letter
+        plt.rc('text', usetex=False)
+        plt.rc('font', family='serif', size=12)
+        
+
+        fig = plt.figure(figsize=(8,4), dpi=300, 
+                         linewidth=0.0, facecolor="white")
+        ax = plt.subplot(1,1,1, projection='3d')
+
+        ax.set_xlabel("x")
+        ax.set_xticks([0,1])
+        ax.set_ylabel("y")
+        ax.set_yticks([0])
+        ax.set_zlabel("z")
+        ax.set_zticks([1])
+
+        ax.view_init(15,45)
+        ax.view_init(15,45)
+
+        #plot's list
+        p = []
+
+        #external spherical triangle
+        Npts = 30
+        xx = np.linspace(1,0,Npts)
+        xx = np.append(xx,np.zeros(Npts))
+        xx = np.append(xx,np.linspace(0,1,Npts))
+
+        yy = np.linspace(0,1,Npts)
+        yy = np.append(yy,np.linspace(1,0,Npts))
+        yy = np.append(yy,np.zeros(Npts))
+
+        zz = np.zeros(Npts)
+        zz = np.append(zz,np.linspace(0,1,Npts))
+        zz = np.append(zz,np.linspace(1,0,Npts))
+
+        for i in range(xx.size):
+            factor = np.sqrt(xx[i]**2 + yy[i]**2 + zz[i]**2)
+            xx[i] = xx[i]/factor
+            yy[i] = yy[i]/factor
+            zz[i] = zz[i]/factor
+        p.append(ax.plot(xx,yy,zz,color="black",
+                          linestyle="-",linewidth=0.75))
+
+        #plot quadrature nodes
+        for i in range(self.nnodes):
+            p.append(ax.plot([self.mu[i]],[self.eta[i]],[self.xi[i]],
+                             marker=".", markersize=3,
+                             color="black"))
+
+        plt.savefig(fname+"."+extension,
+                    bbox_inches="tight")
+        if (show):
+            plt.show()
+
+
+
+
+        
+    def diagnostics(self):
+        self.zerothMomentError()
+
+    def zerothMomentError(self):
+        s = 0.0
+        for i in range(self.nnodes3):
+            s += self.w3[i]
+        print("Zeroth moment error: %1.2e" % np.fabs(s-4*np.pi))
         

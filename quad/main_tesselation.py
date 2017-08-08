@@ -6,7 +6,7 @@ ______
 
 Pedro H A Konzen - UFRGS - Mar/2017
 
-Licence
+License
 _______
 
 This program is free software: you can redistribute it and/or modify

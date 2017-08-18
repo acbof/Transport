@@ -1,10 +1,11 @@
 """
-Example use of the tesselation quadrature set.
+Example use of the Legendre-Chebyshev quadrangular quadrature set.
 
 Author
 ______
 
-Pedro H A Konzen - UFRGS - Mar/2017
+Pedro H A Konzen - UFRGS - Aug/2017
+Ana Carolina Bof - UFRGS - Aug/2017
 
 License
 _______
@@ -27,13 +28,13 @@ __________
 
 """
 
-import tesselation as quad
+import lcqq as quad
 
 #quadrature order
 N = 2
 
 #initiate the quadrature
-q = quad.Tesselation(N)
+q = quad.Lcqq(N)
 print(q)
 
 #print quadrature set on first octant

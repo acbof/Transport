@@ -103,7 +103,7 @@ class Quadrature:
         plt.rc('font', family='serif', size=12)
         
 
-        fig = plt.figure(figsize=(8,4), dpi=300, 
+        fig = plt.figure(figsize=(4,3), dpi=300, 
                          linewidth=0.0, facecolor="white")
         ax = plt.subplot(1,1,1, projection='3d')
 
@@ -146,7 +146,7 @@ class Quadrature:
         for i in range(self.nnodes):
             p.append(ax.plot([self.mu[i]],[self.eta[i]],[self.xi[i]],
                              marker=".", markersize=3,
-                             color="black"))
+                             color="red"))
 
         plt.savefig(fname+"."+extension,
                     bbox_inches="tight")

@@ -45,6 +45,7 @@ __________
 import quadrature
 
 import numpy as np
+from numpy import polynomial as poly
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -90,8 +91,29 @@ class Lcqq(quadrature.Quadrature):
         '''
         Build the quadrature set on the first octant.
         '''
+        #Gauss-Legendre quadrature (x,w) - (points, weights)
+        x,wi = poly.legendre.leggauss(self.N);
+        #just the positive values
+        x0 = x[int(self.N/2):] 
+        w0 = wi[int(self.N/2):]
 
-        print("to be continued ...")
+        #wbar
+        wbar = np.zeros(self.N, dtype='double')
+        for j in np.arange(1,self.N+1):
+            wbar[j-1] = np.pi/2 * (1 - (self.N-2*j+1)/self.N)
+            
+        #Quadratute points on the first octant (3D computations)
+        c = 0
+        for i in np.arange(int(self.N/2)):
+            for j in np.arange(int(self.N/2)):
+                aux = np.sqrt(1-x0[i]**2)*np.cos(wbar[j])
+                if (aux > 0.0):
+                    self.mu[c] = aux
+                    self.eta[c] = np.sqrt(1 - self.mu[c]**2-x0[i]**2)
+                    self.xi[c] = np.sqrt(1 - self.mu[c]**2 - self.eta[c]**2)
+                    self.w[c] = np.pi * w0[i]/self.N
+                    c += 1
+        
 
     def build3d(self):
         '''

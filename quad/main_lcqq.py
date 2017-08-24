@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Example use of the Legendre-Chebyshev quadrangular quadrature set.
 

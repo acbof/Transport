@@ -38,7 +38,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 References
 __________
 
-[1] colocar a ref.
+[1] Longoni, G., Haghighat, A. (2001). Development of new quadrature sets with the ordinate splitting technique. 
+Proceedings the 2001 American Nuclear Society International Meeting on Mathematical Methods for Nuclear 
+Applications (M&C 2001), Salt Lake City, UT.
 
 """
 

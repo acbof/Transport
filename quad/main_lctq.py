@@ -29,13 +29,13 @@ __________
 
 """
 
-import lcqq as quad
+import lctq as quad
 
 #quadrature order
 N = 6
 
 #initiate the quadrature
-q = quad.Lcqq(N)
+q = quad.Lctq(N)
 print(q)
 
 #print quadrature set on first octant

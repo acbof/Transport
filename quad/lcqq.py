@@ -38,7 +38,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 References
 __________
 
-[1] colocar a ref.
+[1] Longoni, G., Haghighat, A. (2001). Development of new quadrature sets with the ordinate splitting technique. 
+Proceedings the 2001 American Nuclear Society International Meeting on Mathematical Methods for Nuclear 
+Applications (M&C 2001), Salt Lake City, UT.
 
 """
 
@@ -70,7 +72,9 @@ class Lcqq(quadrature.Quadrature):
 
         #build quadrature set on first octant
         self.buildFirstOctantSet()
-        
+ 
+        #build quadrature set on first octant
+        self.buildFirstQuadrantSet()
 
     def __repr__(self):
         note =  "\nLegendre-Chebyshev quadrangular quadrature set\n"
@@ -114,7 +118,32 @@ class Lcqq(quadrature.Quadrature):
                     self.w[c] = np.pi * w0[i]/self.N
                     c += 1
         
+    def buildFirstQuadrantSet(self):
+        '''
+        Build the quadrature set on the first quadrant.
+        '''
+        #Gauss-Legendre quadrature (x,w) - (points, weights)
+        x,wi = poly.legendre.leggauss(self.N);
+        #just the positive values
+        x0 = x[int(self.N/2):] 
+        w0 = wi[int(self.N/2):]
 
+        #wbar
+        wbar = np.zeros(self.N, dtype='double')
+        for j in np.arange(1,self.N+1):
+            wbar[j-1] = np.pi/2 * (1 - (self.N-2*j+1)/self.N)
+        
+        #Quadratute points on the first quadrant (2D computations)
+        c = 0
+        for i in np.arange(int(self.N/2)):
+            for j in np.arange(int(self.N/2)):
+                aux = np.sqrt(1-x0[i]**2)*np.cos(wbar[j])
+                if (aux > 0.0):
+                    self.mu[c] = aux
+                    self.eta[c] = np.sqrt(1 - self.mu[c]**2-x0[i]**2)
+                    self.w[c] = 2*np.pi * w0[i]/self.N
+                    c += 1
+                            
     def build3d(self):
         '''
         Build the quadrature set on the unit sphere.
@@ -124,7 +153,9 @@ class Lcqq(quadrature.Quadrature):
         self.eta3 = np.resize(self.eta3, self.nnodes3)
         self.xi3 = np.resize(self.xi3, self.nnodes3)
         self.w3 = np.resize(self.w3, self.nnodes3)
+        
         node3 = 0
+        
         for i in [1,-1]:
             for j in [1,-1]:
                 for k in [1,-1]:
@@ -134,4 +165,22 @@ class Lcqq(quadrature.Quadrature):
                         self.xi3[node3] = k*self.xi[node]
                         self.w3[node3] = self.w[node]
                         node3 += 1
-                        
+                       
+    def build2d(self):
+        '''
+        Build the quadrature set on the unit circle.
+        '''
+        self.nnodes2 = 4*self.nnodes
+        self.mu2 = np.resize(self.mu2, self.nnodes2)
+        self.eta2 = np.resize(self.eta2, self.nnodes2)
+        self.w2 = np.resize(self.w2, self.nnodes2)
+        
+        node2 = 0
+
+        for i in [1,-1]:
+            for j in [1,-1]:
+                for node in range(self.nnodes):
+                    self.mu2[node2] = i*self.mu[node]
+                    self.eta2[node2] = j*self.eta[node]
+                    self.w2[node2] = self.w[node]
+                    node2 += 1

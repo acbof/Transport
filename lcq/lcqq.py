@@ -146,8 +146,7 @@ print("\tError: \n" , np.fabs(s - e))
 *********************************************
 """
 
-#print quadrature table
-print("\n\nQuadrature table for 2D computations")
+#Quadratute points on the first quadrant (2D computations)
 mu2 = np.empty(1)
 eta2 = np.empty(1)
 ww2 = np.empty(1)
@@ -174,6 +173,8 @@ for m in np.arange(M):
 
 M2 = c
 
+#print quadrature table
+print("\n\nQuadrature table for 2D computations")
 print("[mu, eta, w]")
 for i in np.arange(M2):
     print("%1.7E %1.7E %1.7E" % (mu2[i],eta2[i],ww2[i]))

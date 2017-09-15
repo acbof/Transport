@@ -54,6 +54,7 @@ class Quadrature:
 
         #quadrature order
         self.N = N
+        
         #quadrature set on first octant
         self.nnodes = 0
         self.mu = np.empty(self.nnodes, dtype='double')
@@ -159,6 +160,50 @@ class Quadrature:
                     bbox_inches="tight")
         if (show):
             plt.show()
+
+            
+
+    def build3d(self):
+        '''
+        Build the quadrature set on the unit sphere.
+        '''
+        self.nnodes3 = 8*self.nnodes
+        self.mu3 = np.resize(self.mu3, self.nnodes3)
+        self.eta3 = np.resize(self.eta3, self.nnodes3)
+        self.xi3 = np.resize(self.xi3, self.nnodes3)
+        self.w3 = np.resize(self.w3, self.nnodes3)
+        
+        node3 = 0
+        
+        for i in [1,-1]:
+            for j in [1,-1]:
+                for k in [1,-1]:
+                    for node in range(self.nnodes):
+                        self.mu3[node3] = i*self.mu[node]
+                        self.eta3[node3] = j*self.eta[node]
+                        self.xi3[node3] = k*self.xi[node]
+                        self.w3[node3] = self.w[node]
+                        node3 += 1
+
+                        
+    def build2d(self):
+        '''
+        Build the quadrature set on the unit circle.
+        '''
+        self.nnodes2 = 4*self.nnodes
+        self.mu2 = np.resize(self.mu2, self.nnodes2)
+        self.eta2 = np.resize(self.eta2, self.nnodes2)
+        self.w2 = np.resize(self.w2, self.nnodes2)
+        
+        node2 = 0
+
+        for i in [1,-1]:
+            for j in [1,-1]:
+                for node in range(self.nnodes):
+                    self.mu2[node2] = i*self.mu[node]
+                    self.eta2[node2] = j*self.eta[node]
+                    self.w2[node2] = self.w[node]
+                    node2 += 1
 
     def printFirstQuadrantSet(self):
         print("%s" % ((4*15+3)*"*"))

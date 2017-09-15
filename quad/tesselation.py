@@ -182,26 +182,7 @@ class Tesselation(quadrature.Quadrature):
             #compute the area as the spherical excess
             self.w[t] = A+B+C - np.pi
 
-    def build3d(self):
-        '''
-        Build the quadrature set on the unit sphere.
-        '''
-        self.nnodes3 = 8*self.nnodes
-        self.mu3 = np.resize(self.mu3, self.nnodes3)
-        self.eta3 = np.resize(self.eta3, self.nnodes3)
-        self.xi3 = np.resize(self.xi3, self.nnodes3)
-        self.w3 = np.resize(self.w3, self.nnodes3)
-        node3 = 0
-        for i in [1,-1]:
-            for j in [1,-1]:
-                for k in [1,-1]:
-                    for node in range(self.nnodes):
-                        self.mu3[node3] = i*self.mu[node]
-                        self.eta3[node3] = j*self.eta[node]
-                        self.xi3[node3] = k*self.xi[node]
-                        self.w3[node3] = self.w[node]
-                        node3 += 1
-                        
+                      
                         
     def plotFirstOctant(self,
                         fname="plot",

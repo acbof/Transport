@@ -41,7 +41,7 @@ print(q)
 #print quadrature set on first octant
 q.printFirstOctantSet()
 
-#build the complete quadrature set
+#build the complete quadrature set (3D)
 q.build3d()
 
 #diagnotics
@@ -49,3 +49,12 @@ q.diagnostics()
 
 #plot
 q.plotFirstOctant(show=True)
+
+#print quadrature set on first quadrant
+q.printFirstQuadrantSet()
+
+#build the complete quadrature set (2D)
+q.build2d()
+
+#diagnotics
+q.diagnostics()

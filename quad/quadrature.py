@@ -60,6 +60,13 @@ class Quadrature:
         self.eta = np.empty(self.nnodes, dtype='double')
         self.xi = np.empty(self.nnodes, dtype='double')
         self.w = np.empty(self.nnodes, dtype='double')
+        
+        #Quadratute points on the first quadrant (2D computations)
+        self.nnodes2 = 0
+        self.mu2 = np.empty(self.nnodes2, dtype='double')
+        self.eta2 = np.empty(self.nnodes2, dtype='double')
+        self.w2 = np.empty(self.nnodes2, dtype='double')
+        
         #complete quadrature set
         self.nnodes3 = 0
         self.mu3 = np.empty(self.nnodes3, dtype='double')
@@ -153,9 +160,16 @@ class Quadrature:
         if (show):
             plt.show()
 
-
-
-
+    def printFirstQuadrantSet(self):
+        print("%s" % ((4*15+3)*"*"))
+        print("Quadrature set on first quadrant")
+        print("mu              eta             w")
+        for i in range(self.nnodes):
+            print("%1.9e %1.9e %1.9e" % (self.mu[i],\
+                                         self.eta[i],\
+                                         self.w[i]))
+        print("\nNum. nodes on first quadrant: %d\n" % self.nnodes)
+        print("%s\n" % ((4*15+3)*"*"))
         
     def diagnostics(self):
         self.zerothMomentError()
@@ -165,4 +179,3 @@ class Quadrature:
         for i in range(self.nnodes3):
             s += self.w3[i]
         print("Zeroth moment error: %1.2e" % np.fabs(s-4*np.pi))
-        

@@ -34,6 +34,7 @@ import lctq as quad
 #quadrature order
 N = 6
 
+
 #initiate the quadrature
 q = quad.Lctq(N)
 print(q)
@@ -49,3 +50,12 @@ q.diagnostics()
 
 #plot
 q.plotFirstOctant(show=True)
+
+#print quadrature set on first quadrant
+q.printFirstQuadrantSet()
+
+#build the complete quadrature set (2D)
+q.build2d()
+
+#diagnotics
+q.diagnostics()

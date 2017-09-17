@@ -33,11 +33,13 @@ import lcqq as quad
 
 #quadrature order
 N = 6
-
 #initiate the quadrature
 q = quad.Lcqq(N)
 print(q)
 
+#build quadrature set on first octant
+q.buildFirstOctantSet()
+        
 #print quadrature set on first octant
 q.printFirstOctantSet()
 
@@ -50,11 +52,26 @@ q.diagnostics()
 #plot
 q.plotFirstOctant(show=True)
 
+#build quadrature set on first quadrant
+q.buildFirstQuadrantSet()
+
 #print quadrature set on first quadrant
 q.printFirstQuadrantSet()
 
 #build the complete quadrature set (2D)
 q.build2d()
+
+#diagnotics
+q.diagnostics()
+
+#print quadrature set on radius
+q.buildRadiusSet()
+
+#print quadrature set on radius
+q.printRadiusSet()
+
+#build the complete quadrature set (1D)
+q.build1d()
 
 #diagnotics
 q.diagnostics()

@@ -31,7 +31,7 @@ __________
 import tesselation as quad
 
 #quadrature order
-N = 2
+N = 3
 
 #initiate the quadrature
 q = quad.Tesselation(N)

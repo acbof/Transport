@@ -93,7 +93,7 @@ class Quadrature:
         print("%s" % ((4*15+3)*"*"))
         print("Quadrature set on first octant")
         print("mu              eta             xi              w")
-        for i in range(self.nnodes):
+        for i in np.arange(self.nnodes):
             print("%1.9e %1.9e %1.9e %1.9e" % (self.mu[i],\
                                                self.eta[i],\
                                                self.xi[i],\

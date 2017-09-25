@@ -33,7 +33,7 @@ __________
 import srap as quad
 
 #quadrature order
-N = 5
+N = 2
 
 #initiate the quadrature
 q = quad.SRAP(N)

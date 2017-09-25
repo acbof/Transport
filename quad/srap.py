@@ -54,9 +54,9 @@ class SRAP(quadrature.Quadrature):
 
     def __init__(self,N=0):
         quadrature.Quadrature.__init__(self,N)
-        assert (N>=2), "Quadrature order N must be >= 2."
+        assert (self.N>=2), "Quadrature order N must be >= 2."
         #num. nodes of first octant
-        self.nnodes = int(N*(N+3)/2)
+        self.nnodes = int(self.N*(self.N+3)/2)
         #nodes and weights on first octant
         self.mu = np.resize(self.mu, self.nnodes)
         self.eta = np.resize(self.eta, self.nnodes)
@@ -87,51 +87,54 @@ class SRAP(quadrature.Quadrature):
         '''
         Build the quadrature set on the first octant.
         '''
-        M = 2
-        m = 2
+        M = int(self.N*(self.N+3)/2)
 
-        dtheta = np.pi/2/self.N
-        dphi = np.pi/2/m
+        # self.level[0]['ne'] = m
+        # self.level[0]['theta'] = [0, dtheta]
+        # self.level[0]['phi'] = [0, dphi, 2*dphi]
+        # self.level[0]['p'] = []
+        # #centroid of the solid angle
+        # for e in np.arange(m):
+        #     t1 = self.level[0]['theta'][0]
+        #     t2 = self.level[0]['theta'][1]
+        #     p1 = self.level[0]['phi'][e]
+        #     p2 = self.level[0]['phi'][e+1]
+        #     mu = 1.0/3 * (np.sin(p2)-np.sin(p1)) * \
+        #       (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
+        #     eta = 1.0/3 * (np.cos(p1)-np.cos(p2)) * \
+        #       (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
+        #     xi = 1.0/6 * (p2-p1) * (np.sin(t2)**2-np.sin(t1)**2)
 
-        self.level = [{}]
-
-        self.level[0]['ne'] = m
-        self.level[0]['theta'] = [0, dtheta]
-        self.level[0]['phi'] = [0, dphi, 2*dphi]
-        self.level[0]['p'] = []
-        #centroid of the solid angle
-        for e in np.arange(m):
-            t1 = self.level[0]['theta'][0]
-            t2 = self.level[0]['theta'][1]
-            p1 = self.level[0]['phi'][e]
-            p2 = self.level[0]['phi'][e+1]
-            mu = 1.0/3 * (np.sin(p2)-np.sin(p1)) * \
-              (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
-            eta = 1.0/3 * (np.cos(p1)-np.cos(p2)) * \
-              (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
-            xi = 1.0/6 * (p2-p1) * (np.sin(t2)**2-np.sin(t1)**2)
-
-            f = np.sqrt(mu**2+eta**2+xi**2)
-            self.level[0]['p'].append([mu/f,eta/f,xi/f])
+        #     f = np.sqrt(mu**2+eta**2+xi**2)
+        #     self.level[0]['p'].append([mu/f,eta/f,xi/f])
     
-            # theta = (level[0]['theta'][0]+level[0]['theta'][1])/2
-            # phi = (level[0]['phi'][e]+level[0]['phi'][e+1])/2
-            # mu = np.sin(theta)*np.cos(phi)
-            # eta = np.sin(theta)*np.sin(phi)
-            # xi = np.cos(theta)
-            # level[0]['p'].append([mu,eta,xi])
+        #     # theta = (level[0]['theta'][0]+level[0]['theta'][1])/2
+        #     # phi = (level[0]['phi'][e]+level[0]['phi'][e+1])/2
+        #     # mu = np.sin(theta)*np.cos(phi)
+        #     # eta = np.sin(theta)*np.sin(phi)
+        #     # xi = np.cos(theta)
+        #     # level[0]['p'].append([mu,eta,xi])
     
-        for l in np.arange(1,self.N):
+        self.level = []
+        for l in np.arange(self.N):
             self.level.append({})
-            m += 1
+            m = l+2
             dphi = np.pi/2/m
             self.level[l]['ne'] = m
-            self.level[l]['theta'] = [self.level[l-1]['theta'][1], \
-                                     self.level[l-1]['theta'][1]+dtheta]
             self.level[l]['phi'] = []
+            
             for i in np.arange(m+1):
-                self.level[l]['phi'].append(i*dphi)
+                self.level[l]['phi'].append(i*np.pi/(2*m))
 
+            if (l == 0):
+                t1 = 0
+                t2 = np.arccos(1-2/M)
+            else:
+                t1 = self.level[l-1]['theta'][1]
+                t2 = np.arccos(np.cos(t1)-(l+1)/M)
+
+            self.level[l]['theta'] = [t1,t2]
+ 
             #centroid of the solid angle
             self.level[l]['p'] = []
             for e in np.arange(m):
@@ -154,8 +157,6 @@ class SRAP(quadrature.Quadrature):
                 # eta = np.sin(theta)*np.sin(phi)
                 # xi = np.cos(theta)
                 # level[l]['p'].append([mu,eta,xi])
-
-            M += self.level[l]['ne']
 
         assert (M == self.nnodes)
 

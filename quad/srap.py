@@ -88,32 +88,6 @@ class SRAP(quadrature.Quadrature):
         Build the quadrature set on the first octant.
         '''
         M = int(self.N*(self.N+3)/2)
-
-        # self.level[0]['ne'] = m
-        # self.level[0]['theta'] = [0, dtheta]
-        # self.level[0]['phi'] = [0, dphi, 2*dphi]
-        # self.level[0]['p'] = []
-        # #centroid of the solid angle
-        # for e in np.arange(m):
-        #     t1 = self.level[0]['theta'][0]
-        #     t2 = self.level[0]['theta'][1]
-        #     p1 = self.level[0]['phi'][e]
-        #     p2 = self.level[0]['phi'][e+1]
-        #     mu = 1.0/3 * (np.sin(p2)-np.sin(p1)) * \
-        #       (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
-        #     eta = 1.0/3 * (np.cos(p1)-np.cos(p2)) * \
-        #       (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
-        #     xi = 1.0/6 * (p2-p1) * (np.sin(t2)**2-np.sin(t1)**2)
-
-        #     f = np.sqrt(mu**2+eta**2+xi**2)
-        #     self.level[0]['p'].append([mu/f,eta/f,xi/f])
-    
-        #     # theta = (level[0]['theta'][0]+level[0]['theta'][1])/2
-        #     # phi = (level[0]['phi'][e]+level[0]['phi'][e+1])/2
-        #     # mu = np.sin(theta)*np.cos(phi)
-        #     # eta = np.sin(theta)*np.sin(phi)
-        #     # xi = np.cos(theta)
-        #     # level[0]['p'].append([mu,eta,xi])
     
         self.level = []
         for l in np.arange(self.N):
@@ -131,7 +105,7 @@ class SRAP(quadrature.Quadrature):
                 t2 = np.arccos(1-2/M)
             else:
                 t1 = self.level[l-1]['theta'][1]
-                t2 = np.arccos(np.cos(t1)-(l+1)/M)
+                t2 = np.arccos(np.cos(t1)-(l+2)/M)
 
             self.level[l]['theta'] = [t1,t2]
  
@@ -151,14 +125,7 @@ class SRAP(quadrature.Quadrature):
                 f = np.sqrt(mu**2+eta**2+xi**2)
                 self.level[l]['p'].append([mu/f,eta/f,xi/f])
 
-                # theta = (level[l]['theta'][0]+level[l]['theta'][1])/2
-                # phi = (level[l]['phi'][e]+level[l]['phi'][e+1])/2
-                # mu = np.sin(theta)*np.cos(phi)
-                # eta = np.sin(theta)*np.sin(phi)
-                # xi = np.cos(theta)
-                # level[l]['p'].append([mu,eta,xi])
-
-        assert (M == self.nnodes)
+        assert (abs(self.level[self.N-1]['theta'][1] - np.pi/2) < 1e-14)
 
         surf = np.pi/2/self.nnodes
 
@@ -282,6 +249,10 @@ class SRAP(quadrature.Quadrature):
                          self.eta[node],\
                          self.xi[node],\
                          color='blue', marker='.')
+            #numbering
+            ax1.text(self.mu[node],self.eta[node]+0.05,\
+                         self.xi[node],str(node+1),fontsize=8)
+
 
                         
         plt.savefig(fname+"."+extension,

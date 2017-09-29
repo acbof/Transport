@@ -26,14 +26,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 References
 __________
 
-[1] B.-.W. Li, Q. Yao, X.-.Y. Cao, K.-.F. Cen, "A new discrete ordinate quadrature scheme for 3-D radiative heat transfer", ASME J Heat Transfer, 120 (1998), pp. 514-518
+[1] B.-.W. Li, Q. Yao, X.-.Y. Cao, K.-.F. Cen, "A new discrete ordinate 
+quadrature scheme for 3-D radiative heat transfer", ASME J Heat Transfer, 
+120 (1998), pp. 514-518
 
 """
 
 import srap as quad
 
 #quadrature order
-N = 3
+N = 2
 
 #initiate the quadrature
 q = quad.SRAP(N)

@@ -116,11 +116,11 @@ class SRAP(quadrature.Quadrature):
                 t2 = self.level[l]['theta'][1]
                 p1 = self.level[l]['phi'][e]
                 p2 = self.level[l]['phi'][e+1]
-                mu = 1.0/3 * (np.sin(p2)-np.sin(p1)) * \
+                mu = (np.sin(p2)-np.sin(p1)) * \
                   (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
-                eta = 1.0/3 * (np.cos(p1)-np.cos(p2)) * \
+                eta = (np.cos(p1)-np.cos(p2)) * \
                   (t2/2-np.sin(2*t2)/4 -t1/2 + np.sin(2*t1)/4)
-                xi = 1.0/6 * (p2-p1) * (np.sin(t2)**2-np.sin(t1)**2)
+                xi = 1.0/2 * (p2-p1) * (np.sin(t2)**2-np.sin(t1)**2)
 
                 f = np.sqrt(mu**2+eta**2+xi**2)
                 self.level[l]['p'].append([mu/f,eta/f,xi/f])

@@ -62,17 +62,27 @@ class Quadrature:
         self.xi = np.empty(self.nnodes, dtype='double')
         self.w = np.empty(self.nnodes, dtype='double')
         
+<<<<<<< HEAD
         #Quadrature set on the diameter (1D computations)
         self.nnodes1 = 0
         self.mu1 = np.empty(self.nnodes1, dtype='double')
         self.w1 = np.empty(self.nnodes1, dtype='double')
         
         #Quadratute set on the first quadrant (2D computations)
+=======
+
+        #Quadratute points on the radius (1D computations)
+        self.nnodes1 = 0
+        self.mu1 = np.empty(self.nnodes1, dtype='double')
+        self.w1 = np.empty(self.nnodes1, dtype='double')
+
+        #Quadratute points on the first quadrant (2D computations)
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303
         self.nnodes2 = 0
         self.mu2 = np.empty(self.nnodes2, dtype='double')
         self.eta2 = np.empty(self.nnodes2, dtype='double')
         self.w2 = np.empty(self.nnodes2, dtype='double')
-        
+
         #complete quadrature set
         self.nnodes3 = 0
         self.mu3 = np.empty(self.nnodes3, dtype='double')
@@ -94,17 +104,8 @@ class Quadrature:
         License, or\n\
         (at your option) any later version.\n\n"
 
-    def printFirstOctantSet(self):
-        print("%s" % ((4*15+3)*"*"))
-        print("Quadrature set on first octant")
-        print("mu              eta             xi              w")
-        for i in range(self.nnodes):
-            print("%1.9e %1.9e %1.9e %1.9e" % (self.mu[i],\
-                                               self.eta[i],\
-                                               self.xi[i],\
-                                               self.w[i]))
-        print("\nNum. nodes on first octant: %d\n" % self.nnodes)
-        print("%s\n" % ((4*15+3)*"*"))
+    def buildFirstOctant(self):
+        assert 0, "This is not implemented."
 
 
     def printFirstQuadrantSet(self):
@@ -230,7 +231,7 @@ class Quadrature:
                 for node in range(self.nnodes):
                     self.mu2[node2] = i*self.mu[node]
                     self.eta2[node2] = j*self.eta[node]
-                    self.w2[node2] = self.w[node]
+                    self.w2[node2] = 2*self.w[node]
                     node2 += 1
 
     def build1d(self):
@@ -246,6 +247,7 @@ class Quadrature:
         for i in [1,-1]:
             for node in range(self.nnodes):
                 self.mu1[node1] = i*self.mu[node]
+<<<<<<< HEAD
                 self.w1[node1] = self.w[node]
                 node1 += 1
 
@@ -257,3 +259,66 @@ class Quadrature:
         for i in range(self.nnodes3):
             s += self.w3[i]
         print("Zeroth moment error: %1.2e\n" % np.fabs(s-4*np.pi))
+=======
+                self.w1[node1] = 4*self.w[node]
+                node1 += 1
+
+
+
+    def diagnostics(self,dim):
+        assert ((dim>=1) and (dim <= 3)), "One, two or three dimensions allowed."
+        self.zerothMomentError(dim)
+
+    def zerothMomentError(self,dim):
+        s = 0.0
+        if (dim == 3):
+            for i in range(self.nnodes3):
+                s += self.w3[i]
+        elif (dim == 2):
+            for i in range(self.nnodes2):
+                s += self.w2[i]
+        elif (dim == 1):
+            for i in range(self.nnodes1):
+                s += self.w1[i]
+        else:
+            assert((dim>=1) and (dim<=3))
+                
+        print("Zeroth moment error: %1.2e\n" % np.fabs(s-4*np.pi))
+
+
+    def printFirstOctantSet(self):
+        print("%s" % ((4*15+3)*"*"))
+        print("Quadrature set on first octant")
+        print("mu              eta             xi              w")
+        for i in np.arange(self.nnodes):
+            print("%1.9e %1.9e %1.9e %1.9e" % (self.mu[i],\
+                                               self.eta[i],\
+                                               self.xi[i],\
+                                               self.w[i]))
+        print("\nNum. nodes on first octant: %d\n" % self.nnodes)
+        print("%s\n" % ((4*15+3)*"*"))
+
+
+    def printFirstQuadrantSet(self):
+        print("%s" % ((4*15+3)*"*"))
+        print("Quadrature set on first quadrant")
+        print("mu              eta             w")
+        for i in range(self.nnodes):
+            print("%1.9e %1.9e %1.9e" % (self.mu2[i],\
+                                         self.eta2[i],\
+                                         self.w2[i]))
+        print("\nNum. nodes on first quadrant: %d\n" % self.nnodes)
+        print("%s\n" % ((4*15+3)*"*"))
+
+
+    def printRadiusSet(self):
+        print("%s" % ((4*15+3)*"*"))
+        print("Quadrature set on radius")
+        print("mu             w")
+        for i in range(self.nnodes):
+            print("%1.9e %1.9e" % (self.mu1[i],\
+                                   self.w1[i]))
+        print("\nNum. nodes on radius: %d\n" % self.nnodes)
+        print("%s\n" % ((4*15+3)*"*"))
+
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303

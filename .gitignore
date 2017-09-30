@@ -1,2 +1,4 @@
-
-quad/plot.png
+*.pyc
+*.png
+*~
+*#

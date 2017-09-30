@@ -32,7 +32,12 @@ __________
 import lcqq as quad
 
 #quadrature order
+<<<<<<< HEAD
 N = 6
+=======
+N = 2
+
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303
 #initiate the quadrature
 q = quad.Lcqq(N)
 print(q)
@@ -47,21 +52,33 @@ q.printFirstOctantSet()
 q.build3d()
 
 #diagnotics
-q.diagnostics()
+q.diagnostics(3)
 
 #plot
 q.plotFirstOctant(show=True)
 
+<<<<<<< HEAD
 #build quadrature set on first quadrant
 q.buildFirstQuadrantSet()
+=======
+#build the complete quadrature set (2D)
+q.build2d()
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303
 
 #print quadrature set on first quadrant
 q.printFirstQuadrantSet()
 
+#diagnotics
+q.diagnostics(2)
+
 #build the complete quadrature set (2D)
-q.build2d()
+q.build1d()
+
+#print quadrature set on first quadrant
+q.printRadiusSet()
 
 #diagnotics
+<<<<<<< HEAD
 q.diagnostics()
 
 #print quadrature set on radius
@@ -75,3 +92,6 @@ q.build1d()
 
 #diagnotics
 q.diagnostics()
+=======
+q.diagnostics(1)
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303

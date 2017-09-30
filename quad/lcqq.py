@@ -59,7 +59,7 @@ class Lcqq(quadrature.Quadrature):
         quadrature.Quadrature.__init__(self,N)
 
         #verify if N is even
-        assert (N%2 == 0), "N must be even."
+        assert (N%2 == 0), "N must be xeven."
 
         #num. nodes of first octant
         self.nnodes = int(N**2/4)
@@ -69,8 +69,15 @@ class Lcqq(quadrature.Quadrature):
         self.eta = np.resize(self.eta, self.nnodes)
         self.xi = np.resize(self.xi, self.nnodes)
         self.w = np.resize(self.w, self.nnodes)
+<<<<<<< HEAD
         
 
+=======
+
+        #build quadrature set on first octant
+        self.buildFirstOctantSet()
+ 
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303
     def __repr__(self):
         note =  "\nLegendre-Chebyshev quadrangular quadrature set\n"
         note += "Author:\n" +\
@@ -113,6 +120,7 @@ class Lcqq(quadrature.Quadrature):
                     self.xi[c] = np.sqrt(1 - self.mu[c]**2 - self.eta[c]**2)
                     self.w[c] = np.pi * w0[i]/self.N
                     c += 1
+<<<<<<< HEAD
         
     def buildFirstQuadrantSet(self):
         '''
@@ -164,3 +172,6 @@ class Lcqq(quadrature.Quadrature):
                     self.mu[c] = aux
                     self.w[c] = 3*np.pi * w0[i]/self.N
                     c += 1
+=======
+                                    
+>>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303

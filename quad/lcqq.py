@@ -69,15 +69,10 @@ class Lcqq(quadrature.Quadrature):
         self.eta = np.resize(self.eta, self.nnodes)
         self.xi = np.resize(self.xi, self.nnodes)
         self.w = np.resize(self.w, self.nnodes)
-<<<<<<< HEAD
         
-
-=======
-
         #build quadrature set on first octant
         self.buildFirstOctantSet()
  
->>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303
     def __repr__(self):
         note =  "\nLegendre-Chebyshev quadrangular quadrature set\n"
         note += "Author:\n" +\
@@ -120,58 +115,3 @@ class Lcqq(quadrature.Quadrature):
                     self.xi[c] = np.sqrt(1 - self.mu[c]**2 - self.eta[c]**2)
                     self.w[c] = np.pi * w0[i]/self.N
                     c += 1
-<<<<<<< HEAD
-        
-    def buildFirstQuadrantSet(self):
-        '''
-        Build the quadrature set on the first quadrant.
-        '''
-        #Gauss-Legendre quadrature (x,w) - (points, weights)
-        x,wi = poly.legendre.leggauss(self.N);
-        #just the positive values
-        x0 = x[int(self.N/2):] 
-        w0 = wi[int(self.N/2):]
-
-        #wbar
-        wbar = np.zeros(self.N, dtype='double')
-        for j in np.arange(1,self.N+1):
-            wbar[j-1] = np.pi/2 * (1 - (self.N-2*j+1)/self.N)
-        
-        #Quadratute points on the first quadrant (2D computations)
-        c = 0
-        for i in np.arange(int(self.N/2)):
-            for j in np.arange(int(self.N/2)):
-                aux = np.sqrt(1-x0[i]**2)*np.cos(wbar[j])
-                if (aux > 0.0):
-                    self.mu[c] = aux
-                    self.eta[c] = np.sqrt(1 - self.mu[c]**2-x0[i]**2)
-                    self.w[c] = 2*np.pi * w0[i]/self.N
-                    c += 1
-                            
-    def buildRadiusSet(self):
-        '''
-        Build the quadrature set on the radius.
-        '''
-        #Gauss-Legendre quadrature (x,w) - (points, weights)
-        x,wi = poly.legendre.leggauss(self.N);
-        #just the positive values
-        x0 = x[int(self.N/2):] 
-        w0 = wi[int(self.N/2):]
-
-        #wbar
-        wbar = np.zeros(self.N, dtype='double')
-        for j in np.arange(1,self.N+1):
-            wbar[j-1] = np.pi/2 * (1 - (self.N-2*j+1)/self.N)
-        
-        #Quadratute points on the diameter (1D computations)
-        c = 0
-        for i in np.arange(int(self.N/2)):
-            for j in np.arange(int(self.N/2)):
-                aux = np.sqrt(1-x0[i]**2)*np.cos(wbar[j])
-                if (aux > 0.0):
-                    self.mu[c] = aux
-                    self.w[c] = 3*np.pi * w0[i]/self.N
-                    c += 1
-=======
-                                    
->>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303

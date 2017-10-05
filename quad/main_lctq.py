@@ -39,9 +39,6 @@ N = 6
 q = quad.Lctq(N)
 print(q)
 
-#build quadrature set on first octant
-q.buildFirstOctantSet()
-
 #print quadrature set on first octant
 q.printFirstOctantSet()
 
@@ -49,31 +46,25 @@ q.printFirstOctantSet()
 q.build3d()
 
 #diagnotics
-q.diagnostics()
+q.diagnostics(3)
 
 #plot
 q.plotFirstOctant(show=True)
 
-#build quadrature set on first quadrant
-q.buildFirstQuadrantSet()
+#build the complete quadrature set (2D)
+q.build2d()
 
 #print quadrature set on first quadrant
 q.printFirstQuadrantSet()
 
-#build the complete quadrature set (2D)
-q.build2d()
-
 #diagnotics
-q.diagnostics()
-
-#print quadrature set on radius
-q.buildRadiusSet()
-
-#print quadrature set on radius
-q.printRadiusSet()
+q.diagnostics(2)
 
 #build the complete quadrature set (1D)
 q.build1d()
 
+#print quadrature set on radius
+q.printRadiusSet()
+
 #diagnotics
-q.diagnostics()
+q.diagnostics(1)

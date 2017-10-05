@@ -62,14 +62,6 @@ class Quadrature:
         self.xi = np.empty(self.nnodes, dtype='double')
         self.w = np.empty(self.nnodes, dtype='double')
         
-<<<<<<< HEAD
-        #Quadrature set on the diameter (1D computations)
-        self.nnodes1 = 0
-        self.mu1 = np.empty(self.nnodes1, dtype='double')
-        self.w1 = np.empty(self.nnodes1, dtype='double')
-        
-        #Quadratute set on the first quadrant (2D computations)
-=======
 
         #Quadratute points on the radius (1D computations)
         self.nnodes1 = 0
@@ -77,7 +69,6 @@ class Quadrature:
         self.w1 = np.empty(self.nnodes1, dtype='double')
 
         #Quadratute points on the first quadrant (2D computations)
->>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303
         self.nnodes2 = 0
         self.mu2 = np.empty(self.nnodes2, dtype='double')
         self.eta2 = np.empty(self.nnodes2, dtype='double')
@@ -106,29 +97,6 @@ class Quadrature:
 
     def buildFirstOctant(self):
         assert 0, "This is not implemented."
-
-
-    def printFirstQuadrantSet(self):
-        print("%s" % ((4*15+3)*"*"))
-        print("Quadrature set on first quadrant")
-        print("mu              eta             w")
-        for i in range(self.nnodes):
-            print("%1.9e %1.9e %1.9e" % (self.mu[i],\
-                                         self.eta[i],\
-                                         self.w[i]))
-        print("\nNum. nodes on first quadrant: %d\n" % self.nnodes)
-        print("%s\n" % ((4*15+3)*"*"))
-
-
-    def printRadiusSet(self):
-        print("%s" % ((4*15+3)*"*"))
-        print("Quadrature set on radius")
-        print("mu             w")
-        for i in range(self.nnodes):
-            print("%1.9e %1.9e" % (self.mu[i],\
-                                   self.w[i]))
-        print("\nNum. nodes on radius: %d\n" % self.nnodes)
-        print("%s\n" % ((4*15+3)*"*"))
 
     def plotFirstOctant(self,
                         fname="plot",
@@ -247,19 +215,6 @@ class Quadrature:
         for i in [1,-1]:
             for node in range(self.nnodes):
                 self.mu1[node1] = i*self.mu[node]
-<<<<<<< HEAD
-                self.w1[node1] = self.w[node]
-                node1 += 1
-
-    def diagnostics(self):
-        self.zerothMomentError()
-
-    def zerothMomentError(self):
-        s = 0.0
-        for i in range(self.nnodes3):
-            s += self.w3[i]
-        print("Zeroth moment error: %1.2e\n" % np.fabs(s-4*np.pi))
-=======
                 self.w1[node1] = 4*self.w[node]
                 node1 += 1
 
@@ -320,5 +275,3 @@ class Quadrature:
                                    self.w1[i]))
         print("\nNum. nodes on radius: %d\n" % self.nnodes)
         print("%s\n" % ((4*15+3)*"*"))
-
->>>>>>> 6849a4fc4cc13fd125615882ea99d074594f5303

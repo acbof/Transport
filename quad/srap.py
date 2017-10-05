@@ -152,7 +152,7 @@ class SRAP(quadrature.Quadrature):
         plt.rc('font', family='serif', size=12)
         
 
-        fig = plt.figure(figsize=(8,4), dpi=300, \
+        fig = plt.figure(figsize=(4,3), dpi=300, \
                              linewidth=0.0, facecolor="white")
         ax1 = plt.subplot(1,1,1, projection='3d')
         #ax.axis('off')

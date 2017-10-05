@@ -48,7 +48,7 @@ q.printFirstOctantSet()
 q.build3d()
 
 #diagnotics
-q.diagnostics()
+q.diagnostics(3)
 
 #plot
 q.plotFirstOctant(show=True)

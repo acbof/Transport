@@ -59,7 +59,7 @@ class Lcqq(quadrature.Quadrature):
         quadrature.Quadrature.__init__(self,N)
 
         #verify if N is even
-        assert (N%2 == 0), "N must be xeven."
+        assert (N%2 == 0), "N must be even."
 
         #num. nodes of first octant
         self.nnodes = int(N**2/4)

@@ -35,7 +35,7 @@ quadrature scheme for 3-D radiative heat transfer", ASME J Heat Transfer,
 import srap as quad
 
 #quadrature order
-N = 2
+N = 6
 
 #initiate the quadrature
 q = quad.SRAP(N)

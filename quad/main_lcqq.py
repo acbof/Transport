@@ -32,7 +32,7 @@ __________
 import lcqq as quad
 
 #quadrature order
-N = 2
+N = 6
 
 #initiate the quadrature
 q = quad.Lcqq(N)

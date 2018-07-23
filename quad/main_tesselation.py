@@ -31,7 +31,7 @@ __________
 import tesselation as quad
 
 #quadrature order
-N = 3
+N = 6
 
 #initiate the quadrature
 q = quad.Tesselation(N)
@@ -44,7 +44,25 @@ q.printFirstOctantSet()
 q.build3d()
 
 #diagnotics
-q.diagnostics()
+q.diagnostics(3)
 
 #plot
 q.plotFirstOctant(show=True)
+
+#build the complete quadrature set (2D)
+q.build2d()
+
+#print quadrature set on first quadrant
+q.printFirstQuadrantSet()
+
+#diagnotics
+q.diagnostics(2)
+
+#build the complete quadrature set (1D)
+q.build1d()
+
+#print quadrature set on radius
+q.printRadiusSet()
+
+#diagnotics
+q.diagnostics(1)

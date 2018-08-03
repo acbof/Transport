@@ -85,7 +85,7 @@ if s == 'lcqq':
 elif s == 'lctq':
     #LCTQ
     lct = lctq.Lctq(N)
-    lct.build3d
+    lct.build3d()
     lct.build2d()
     lct.build1d()
     
@@ -114,6 +114,11 @@ elif s == 'tesselation':
     for i in np.arange(1,4):
         print('%iD' % i)
         tess.diagnostics(i)
+
+    for n in np.arange(10):
+        verr = tess.nthMomentError(1,n)
+        if (verr >= 1e-10):
+            raise ValueError("parei")
     
 else:
     print('Please provide a valid quadrature')

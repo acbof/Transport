@@ -61,64 +61,34 @@ note = "Author:\n" +\
 
 print(note)
 
-
-N = input('What is the order of de quadrature? (Only even numbers)    ')
+N = 2
 N = int(N)
 
 assert (N%2 == 0), "N must be even."
 
-s = input('Which quadrature would you like to test? (lcqq, lctq, srap or tesselation)  ')
+lcq = lcqq.Lcqq(N)
+lcq.build1d()
+lct = lctq.Lctq(N)
+lct.build1d()
+sra = srap.SRAP(N)
+sra.build1d()
+tess = tesselation.Tesselation(N)
+tess.build1d()
 
-print('N = %i, quadrature: %s' % (N, s))
 
-if s == 'lcqq':
-    #LCQQ
-    lcq = lcqq.Lcqq(N)
-    lcq.build3d()
-    lcq.build2d()
-    lcq.build1d()
-    
-    for i in np.arange(1,4):
-        print('%iD' % i)
-        lcq.diagnostics(i)
-    
-elif s == 'lctq':
-    #LCTQ
-    lct = lctq.Lctq(N)
-    lct.build3d()
-    lct.build2d()
-    lct.build1d()
-    
-    for i in np.arange(1,4):
-        print('%iD' % i)
-        lct.diagnostics(i)
+print('\nN = %i\n' % (N))
 
-elif s == 'srap':
-    #SRAP
-    sra = srap.SRAP(N)
-    sra.build3d()
-    sra.build2d()
-    sra.build1d()
-    
-    for i in np.arange(1,4):
-        print('%iD' % i)
-        sra.diagnostics(i)
-
-elif s == 'tesselation':
-    #Tesselation
-    tess = tesselation.Tesselation(N)
-    tess.build3d()
-    tess.build2d()
-    tess.build1d()
-    
-    for i in np.arange(1,4):
-        print('%iD' % i)
-        tess.diagnostics(i)
-
-    for n in np.arange(10):
-        verr = tess.nthMomentError(1,n)
-        if (verr >= 1e-10):
-            raise ValueError("parei")
-    
-else:
-    print('Please provide a valid quadrature')
+print("s              LCQQ               LCTQ               SRAP               Tesselation        Exact value")
+for n in np.arange(10):            
+    vesp=4*np.pi/(n+1)
+    verr1 = lcq.nthMomentError(1,n)
+    verr2 = lct.nthMomentError(1,n)
+    verr3 = sra.nthMomentError(1,n)
+    verr4 = tess.nthMomentError(1,n)
+    print("%d              %1.2e           %1.2e           %1.2e           %1.2e           %1.2e" % \
+         (n,
+          verr1,\
+          verr2,\
+          verr3,\
+          verr4,
+          vesp))

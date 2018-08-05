@@ -240,15 +240,6 @@ class Quadrature:
 
         print("Zeroth moment error: %1.2e\n" % np.fabs(s-4*np.pi))
 
-    def firstMomentError(self,dim):
-        s = 0.0
-        if (dim == 1):
-            for i in range(self.nnodes1):
-                s += self.mu1[i]*self.w1[i]
-        else:
-            assert(dim>=2)
-
-        print("First moment error: %1.2e\n" % np.fabs(s-0))
 
     def nthMomentError(self,dim,n):
         s = 0.0
@@ -263,9 +254,6 @@ class Quadrature:
             vesp=4*np.pi/(n+1)
 
         verr = np.fabs(s-vesp)
-            
-        print("%d-th moment error: %1.2e\n" % (n,verr))
-
         return verr
 
 

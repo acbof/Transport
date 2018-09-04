@@ -38,6 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 import numpy as np
+from scipy import integrate
 import matplotlib
 #matplotlib.use('Qt4Agg')
 import matplotlib.pyplot as plt
@@ -61,8 +62,10 @@ note = "Author:\n" +\
 
 print(note)
 
-N = 2
+N = 4
 N = int(N)
+
+TOL = 1e-7
 
 assert (N%2 == 0), "N must be even."
 
@@ -78,17 +81,41 @@ tess.build1d()
 
 print('\nN = %i\n' % (N))
 
+vgauss = []
+verr1 = []
+verr2 = []
+verr3 = []
+verr4 = []
+
+nt=50
 print("s              LCQQ               LCTQ               SRAP               Tesselation        Exact value")
-for n in np.arange(10):            
-    vesp=4*np.pi/(n+1)
-    verr1 = lcq.nthMomentError(1,n)
-    verr2 = lct.nthMomentError(1,n)
-    verr3 = sra.nthMomentError(1,n)
-    verr4 = tess.nthMomentError(1,n)
-    print("%d              %1.2e           %1.2e           %1.2e           %1.2e           %1.2e" % \
-         (n,
-          verr1,\
-          verr2,\
-          verr3,\
-          verr4,
+for n in np.arange(nt):            
+    vesp=2*np.pi/(n+1)
+    verr1.append(lcq.nthMomentError(1,n))
+        
+    verr2.append(lct.nthMomentError(1,n))
+
+    verr3.append(sra.nthMomentError(1,n))
+
+    verr4.append(tess.nthMomentError(1,n))
+
+    vgauss.append(2*np.pi*integrate.fixed_quad(lambda x: x**n,0,1,n=N)[0])
+    vgauss[n] = np.fabs(vgauss[n]-vesp)/np.fabs(vesp)
+
+    print("%d            %1.2e         %1.2e         %1.2e         %1.2e         %1.2e         %1.2e" % \
+         (n,\
+          verr1[n],\
+          verr2[n],\
+          verr3[n],\
+          verr4[n],\
+          vgauss[n],\
           vesp))
+
+plt.plot(np.arange(nt),verr1,color="red",linestyle="-",label="LCQQ")
+plt.plot(np.arange(nt),verr2,color="red",linestyle="--",label="LCTQ")
+plt.plot(np.arange(nt),verr3,color="blue",linestyle="-",label="SRAP")
+plt.plot(np.arange(nt),verr4,color="blue",linestyle="--",label="TESS")
+plt.plot(np.arange(nt),vgauss,color="green",linestyle="--",label="TESS")
+plt.legend()
+plt.yscale('log')
+plt.show()

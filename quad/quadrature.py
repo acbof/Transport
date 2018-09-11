@@ -244,14 +244,17 @@ class Quadrature:
     def nthMomentError(self,dim,n):
         s = 0.0
         if (dim == 1):
-            for i in range(self.nnodes):
+            for i in range(self.nnodes1):
                 s += (self.mu1[i]**n)*self.w1[i]
         else:
             assert(dim>=2)
 
-        vesp=2*np.pi/(n+1)
+        if ((n % 2) == 0):
+            vesp=4*np.pi/(n+1)
+        else:
+            vesp=0.0;
 
-        verr = np.fabs(s-vesp)/np.fabs(vesp)
+        verr = np.fabs(s-vesp)
         return verr
 
 

@@ -62,7 +62,7 @@ note = "Author:\n" +\
 
 print(note)
 
-N = 4
+N = 2
 N = int(N)
 
 TOL = 1e-7
@@ -88,9 +88,13 @@ verr3 = []
 verr4 = []
 
 nt=50
-print("s              LCQQ               LCTQ               SRAP               Tesselation        Exact value")
-for n in np.arange(nt):            
-    vesp=2*np.pi/(n+1)
+print("s              LCQQ               LCTQ               SRAP               Tesselation        G-L        Exact value")
+for n in np.arange(nt):
+    if ((n%2)==0):
+        vesp=4*np.pi/(n+1)
+    else:
+        vesp=0.0
+        
     verr1.append(lcq.nthMomentError(1,n))
         
     verr2.append(lct.nthMomentError(1,n))
@@ -99,8 +103,8 @@ for n in np.arange(nt):
 
     verr4.append(tess.nthMomentError(1,n))
 
-    vgauss.append(2*np.pi*integrate.fixed_quad(lambda x: x**n,0,1,n=N)[0])
-    vgauss[n] = np.fabs(vgauss[n]-vesp)/np.fabs(vesp)
+    vgauss.append(2*np.pi*integrate.fixed_quad(lambda x: x**n,-1,1,n=N)[0])
+    vgauss[n] = np.fabs(vgauss[n]-vesp)
 
     print("%d            %1.2e         %1.2e         %1.2e         %1.2e         %1.2e         %1.2e" % \
          (n,\
@@ -111,11 +115,43 @@ for n in np.arange(nt):
           vgauss[n],\
           vesp))
 
-plt.plot(np.arange(nt),verr1,color="red",linestyle="-",label="LCQQ")
-plt.plot(np.arange(nt),verr2,color="red",linestyle="--",label="LCTQ")
-plt.plot(np.arange(nt),verr3,color="blue",linestyle="-",label="SRAP")
-plt.plot(np.arange(nt),verr4,color="blue",linestyle="--",label="TESS")
-plt.plot(np.arange(nt),vgauss,color="green",linestyle="--",label="TESS")
-plt.legend()
-plt.yscale('log')
+# plt.plot(np.arange(nt),verr1,color="red",linestyle="-",label="LCQQ")
+# plt.plot(np.arange(nt),verr2,color="red",linestyle="--",label="LCTQ")
+# plt.plot(np.arange(nt),verr3,color="blue",linestyle="-",label="SRAP")
+# plt.plot(np.arange(nt),verr4,color="blue",linestyle="--",label="TESS")
+# plt.plot(np.arange(nt),vgauss,color="green",linestyle="--",label="G-L")
+# plt.legend()
+# plt.yscale('log')
+# plt.show()
+
+lcq.printRadiusSet()
+
+from numpy import polynomial as poly
+
+x,wi = poly.legendre.leggauss(N)
+#print(x)
+
+#font letter
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif', size=12)
+
+
+fig = plt.figure(figsize=(6,1), dpi=100, 
+                 linewidth=0.0, facecolor="white")
+ax = plt.subplot(1,1,1)
+ax.axis('off')
+ax.set_xlim((-1.1,1.1))
+ax.set_ylim((0.9,1.1))
+plt.plot([-1,-1],[0.99,1.01],'k-')
+plt.plot([1,1],[0.99,1.01],'k-')
+plt.plot([0,0],[0.99,1.01],'k-')
+plt.plot([-1.1,1.1],[1,1],'k-')
+ax.text(-1.05,0.95,r"$-1$")
+plt.plot(x,np.ones((len(x),1)),'o',alpha=0.5,markersize=10)
+#plt.plot(lcq.mu1,np.ones((len(lcq.mu1),1)),'*',markeredgecolor="red",alpha=0.1)
+#plt.plot(tess.mu1,np.ones((len(tess.mu1),1)),'*',markeredgecolor="green")
 plt.show()
+
+print(tess.w1)
+print(lcq.w1)
+
